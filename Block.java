@@ -4,16 +4,16 @@ public class Block {
 	
 	Position position;
 
-	int colorCode;   // 1 = rouge, 2 = bleu, etc. (purement esthétique)
+	int color;
 	
 	Block() {
 		this.position = new Position(0,0);
-		this.colorCode = 1;
+		this.color = 1;
 	}
 
-	Block(Position position, int colorCode) {
+	Block(Position position, int color) {
 		this.position = new Position(position.line, position.column);
-		this.colorCode = colorCode;
+		this.color = color;
 	}
 	
 	void placeRightOf(Block other) {
@@ -47,8 +47,5 @@ public class Block {
 	void moveDown() {
 		this.position.setPosition(this.position.line + 1, this.position.column);
 	}
-	
-	
-	
 	
 }

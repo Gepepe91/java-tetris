@@ -3,58 +3,56 @@ package tetris;
 public class Tetramino {
 	
 	Block block1, block2, block3, block4;
+	// block1 is the rotation pivot
 	
 	String shape, orientation;
 	
-	int color;
+	// There is 7 shapes
 	
-	int idColor, idShape;
+	int colorAndShape;
 	
 	boolean isAllowedToExist = true;
 	
 	Tetramino(){
 		
-		this.idColor = (int) (Math.random() * 5 + 1);
-		this.idShape = (int) (Math.random() * 6 + 1);
+		colorAndShape = (int)(Math.random() * 7 +1); // random integer between 1 and 7 included
 		
-		this.color = this.idColor;
+		block1 = new Block();
+		block2 = new Block();
+		block3 = new Block();
+		block4 = new Block();
 		
-		this.block1 = new Block();
-		this.block2 = new Block();
-		this.block3 = new Block();
-		this.block4 = new Block();
+		block1.color = colorAndShape;
+		block2.color = colorAndShape;
+		block3.color = colorAndShape;
+		block4.color = colorAndShape;
 		
-		this.block1.colorCode = this.color;
-		this.block2.colorCode = this.color;
-		this.block3.colorCode = this.color;
-		this.block4.colorCode = this.color;
-		
-		if (this.idShape == 1)
-			this.setAsCube();
-		if (this.idShape == 2)
-			this.setAsHorizontalLine();
-		if (this.idShape == 3)
-			this.setAsL();
-		if (this.idShape == 4)
-			this.setAsInvertedL();
-		if (this.idShape == 5)
-			this.setAsZ();
-		if (this.idShape == 6)
-			this.setAsInvertedZ();
+		if (colorAndShape == 1)
+			setAsCube();
+		if (colorAndShape == 2)
+			setAsVerticalLine();
+		if (colorAndShape == 3)
+			setAsL();
+		if (colorAndShape == 4)
+			setAsInvertedL();
+		if (colorAndShape == 5)
+			setAsZ();
+		if (colorAndShape == 6)
+			setAsInvertedZ();
+		if (colorAndShape == 7)
+			setAsT();
 	}
 	 
 	void copy(Tetramino other) {
-		this.block1 = new Block(other.block1.position, other.block1.colorCode);
-		this.block2 = new Block(other.block2.position, other.block2.colorCode);
-		this.block3 = new Block(other.block3.position, other.block3.colorCode);
-		this.block4 = new Block(other.block4.position, other.block4.colorCode);
+		this.block1 = new Block(other.block1.position, other.block1.color);
+		this.block2 = new Block(other.block2.position, other.block2.color);
+		this.block3 = new Block(other.block3.position, other.block3.color);
+		this.block4 = new Block(other.block4.position, other.block4.color);
 
 		this.shape = other.shape;
 		this.orientation = other.orientation;
-
-		this.idColor = other.idColor;
-		this.idShape = other.idShape;
-		this.color = other.color;
+		
+		this.colorAndShape = other.colorAndShape;
 	}
 	
 	void spawn(Grid grid) {
@@ -107,128 +105,145 @@ public class Tetramino {
 	}
 	
 	void setAsVerticalLine() {
-		this.block2.placeUnderOf(this.block1);
-		this.block3.placeUnderOf(this.block2);
-		this.block4.placeUnderOf(this.block3);
+		block2.placeOverOf(block1);
+		block3.placeUnderOf(block1);
+		block4.placeUnderOf(block3);
 		this.shape = "line";
 		this.orientation = "vertical";
 	}
 	
 	void setAsHorizontalLine() {
-		this.block2.placeRightOf(this.block1);
-		this.block3.placeRightOf(this.block2);
-		this.block4.placeRightOf(this.block3);
+		block2.placeLeftOf(block1);
+		block3.placeRightOf(block1);
+		block4.placeRightOf(block3);
 		this.shape = "line";
 		this.orientation = "horizontal";
 	}
 	
 	void setAsZ() {
-		this.block2.placeRightOf(this.block1);
-		this.block3.placeUnderOf(this.block2);
-		this.block4.placeRightOf(this.block3);
-		this.shape = "z";
+		block2.placeLeftOf(block1);
+		block3.placeUnderOf(block1);
+		block4.placeRightOf(block3);
+		shape = "z";
 		this.orientation = "default";
 	}
 	
 	void setAsRotatedZ() {
-		this.block2.placeOverOf(this.block1);
-		this.block3.placeRightOf(this.block2);
-		this.block4.placeOverOf(this.block3);
+		block2.placeOverOf(block1);
+		block3.placeLeftOf(block1);
+		block4.placeUnderOf(block3);
 		this.shape = "z";
 		this.orientation = "rotated";
 	}
 	
 	void setAsInvertedZ() {
-		this.block2.placeRightOf(this.block1);
-		this.block3.placeOverOf(this.block2);
-		this.block4.placeRightOf(this.block3);
+		block2.placeRightOf(block1);
+		block3.placeUnderOf(block1);
+		block4.placeLeftOf(block3);
 		this.shape = "iz";
 		this.orientation = "default";
 	}
 	
 	void setAsRotatedIvertedZ() {
-		this.block2.placeUnderOf(this.block1);
-		this.block3.placeRightOf(this.block2);
-		this.block4.placeUnderOf(this.block3);
+		block2.placeOverOf(block1);
+		block3.placeRightOf(block1);
+		block4.placeUnderOf(block3);
 		this.shape = "iz";
 		this.orientation = "rotated";
 	}
 	
 	void setAsL() {
-		this.block2.placeUnderOf(this.block1);
-		this.block3.placeUnderOf(this.block2);
-		this.block4.placeRightOf(this.block3);
+		block2.placeOverOf(block1);
+		block3.placeUnderOf(block1);
+		block4.placeRightOf(block3);
 		this.shape = "l";
 		this.orientation = "default";
-		
 	}
 	
 	void setAsRightRotatedL() {
-		this.block2.placeRightOf(this.block1);
-		this.block3.placeRightOf(this.block2);
-		this.block4.placeOverOf(this.block3);
+		block2.placeRightOf(block1);
+		block3.placeLeftOf(block1);
+		block4.placeUnderOf(block3);
 		this.shape = "l";
 		this.orientation = "rightRotated";
 	}
 	
 	void setAsReversedL() {
-		this.block2.placeRightOf(this.block1);
-		this.block3.placeUnderOf(this.block2);
-		this.block4.placeUnderOf(this.block3);
+		block2.placeUnderOf(block1);
+		block3.placeOverOf(block1);
+		block4.placeLeftOf(block3);
 		this.shape = "l";
 		this.orientation = "reversed";
 	}
 	
 	void setAsLeftRotatedL() {
-		this.block2.placeOverOf(this.block1);
-		this.block3.placeRightOf(this.block2);
-		this.block4.placeRightOf(this.block3);
+		block2.placeLeftOf(block1);
+		block3.placeRightOf(block1);
+		block4.placeOverOf(block3);
 		this.shape = "l";
 		this.orientation = "leftRotated";
 	}
 	
 	void setAsInvertedL() {
-		this.block2.placeUnderOf(this.block1);
-		this.block3.placeUnderOf(this.block2);
-		this.block4.placeLeftOf(this.block3);
+		block2.placeOverOf(block1);
+		block3.placeUnderOf(block1);
+		block4.placeLeftOf(block3);
 		this.shape = "il";
 		this.orientation = "default";
 	}
 	
 	void setAsRightRotatedInvertedL() {
+		block2.placeLeftOf(block1);
+		block3.placeRightOf(block1);
+		block4.placeUnderOf(block3);
 		this.shape = "il";
 		this.orientation = "rightRotated";
 	}
 	
 	void setAsReversedInvertedL() {
+		block2.placeUnderOf(block1);
+		block3.placeOverOf(block1);
+		block4.placeRightOf(block3);
 		this.shape = "il";
 		this.orientation = "reversed";
 	}
 	
 	void setAsLeftRotatedInvertedL() {
+		block2.placeRightOf(block1);
+		block3.placeLeftOf(block1);
+		block4.placeOverOf(block3);
 		this.shape = "il";
 		this.orientation = "leftRotated";
 	}
 	
 	void setAsT() {
-		block2.placeRightOf(block1);
-		block3.placeUnderOf(block2);
-		block4.placeRightOf(block2);
+		block2.placeLeftOf(block1);
+		block3.placeUnderOf(block1);
+		block4.placeRightOf(block1);
 		this.shape = "t";
 		this.orientation = "default";
 	}
 	
 	void setAsRightRotatedT() {
+		block2.placeOverOf(block1);
+		block3.placeLeftOf(block1);
+		block4.placeUnderOf(block1);
 		this.shape = "t";
 		this.orientation = "rightRotated";
 	}
 	
 	void setAsReversedT() {
+		block2.placeLeftOf(block1);
+		block3.placeOverOf(block1);
+		block4.placeRightOf(block1);
 		this.shape = "t";
 		this.orientation = "reversed";
 	}
 	
 	void setAsLeftRotatedT() {
+		block2.placeOverOf(block1);
+		block3.placeRightOf(block1);
+		block4.placeUnderOf(block1);
 		this.shape = "t";
 		this.orientation = "leftRotated";
 	}
@@ -323,57 +338,57 @@ public class Tetramino {
 	}
 	
 	void rotateLine() {
-		if (this.orientation == "vertical")
-			this.setAsHorizontalLine();
+		if (orientation == "vertical")
+			setAsHorizontalLine();
 		else
-			this.setAsVerticalLine();
+			setAsVerticalLine();
 	}
 	
 	void rotateZ() {
-		if (this.orientation == "default")
-			this.setAsRotatedZ();
+		if (orientation == "default")
+			setAsRotatedZ();
 		else
-			this.setAsZ();
+			setAsZ();
 	}
 	
 	void rotateInvertedZ() {
-		if (this.orientation == "default")
-			this.setAsRotatedIvertedZ();
+		if (orientation == "default")
+			setAsRotatedIvertedZ();
 		else
-			this.setAsInvertedZ();
+			setAsInvertedZ();
 	}
 	
 	void rotateL() {
-		if (this.orientation == "default")
-			this.setAsRightRotatedL();
-		else if (this.orientation == "rightRotated")
-			this.setAsReversedL();
-		else if (this.orientation == "reversed")
-			this.setAsLeftRotatedL();
+		if (orientation == "default")
+			setAsLeftRotatedL();
+		else if (orientation == "leftRotated")
+			setAsReversedL();
+		else if (orientation == "reversed")
+			setAsRightRotatedL();
 		else //if (this.orientation == "leftRotated")
-			this.setAsL();
+			setAsL();
 	}
 	
 	void rotateInvertedL() {
-		if (this.orientation == "default")
-			this.setAsRightRotatedInvertedL();
-		else if (this.orientation == "rightRotated")
-			this.setAsReversedInvertedL();
-		else if (this.orientation == "reversed")
-			this.setAsLeftRotatedInvertedL();
+		if (orientation == "default")
+			setAsLeftRotatedInvertedL();
+		else if (orientation == "leftRotated")
+			setAsReversedInvertedL();
+		else if (orientation == "reversed")
+			setAsRightRotatedInvertedL();
 		else
-			this.setAsInvertedL();
+			setAsInvertedL();
 	}
 	
 	void rotateT() {
-		if (this.orientation == "default")
-			this.setAsRightRotatedT();
-		else if (this.orientation == "rightRotated")
-			this.setAsReversedT();
-		else if (this.orientation == "reversed")
-			this.setAsLeftRotatedT();
+		if (orientation == "default")
+			setAsRightRotatedT();
+		else if (orientation == "rightRotated")
+			setAsReversedT();
+		else if (orientation == "reversed")
+			setAsLeftRotatedT();
 		else
-			this.setAsT();
+			setAsT();
 	}
 
 

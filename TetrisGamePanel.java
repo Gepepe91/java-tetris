@@ -14,14 +14,20 @@ public class TetrisGamePanel extends JPanel {
 
 	TetrisGame tetrisGame = new TetrisGame();
 	
-	Color getColor(int colorCode) {
-		if (colorCode == 1)
+	Color getColor(int color) {
+		if (color == 1)
+			return Color.darkGray;
+		else if (color == 2)
+			return Color.YELLOW;
+		else if (color == 3)
 			return Color.RED;
-		else if (colorCode == 2)
-			return Color.BLUE;
-		else if (colorCode == 3)
+		else if (color == 4)
+			return Color.MAGENTA;
+		else if (color == 5)
 			return Color.GREEN;
-		else if (colorCode == 4)
+		else if (color == 6)
+			return Color.BLUE;
+		else if (color == 7)
 			return Color.ORANGE;
 		return Color.WHITE;   // couleur par défaut
 	}
@@ -97,7 +103,7 @@ public class TetrisGamePanel extends JPanel {
 				Block block = tetrisGame.grid.cells[line][column];
 				Color color = Color.LIGHT_GRAY;   // couleur d'une case vide
 				if (block != null) {
-					color = getColor(block.colorCode); // Adapter avec le vrai objet Color
+					color = getColor(block.color); // Adapter avec le vrai objet Color
 				}
 				drawCell(g, line, column, cellSize, color);
 			}
@@ -107,7 +113,7 @@ public class TetrisGamePanel extends JPanel {
 		Position cell2 = tetrisGame.fallingTetramino.block2.position;
 		Position cell3 = tetrisGame.fallingTetramino.block3.position;
 		Position cell4 = tetrisGame.fallingTetramino.block4.position;
-		Color color = getColor(tetrisGame.fallingTetramino.color);
+		Color color = getColor(tetrisGame.fallingTetramino.colorAndShape);
 		
 		drawCell(g,cell1.line, cell1.column, cellSize, color);
 		drawCell(g,cell2.line, cell2.column, cellSize, color);
