@@ -25,7 +25,6 @@ public class TetrisGame {
 	}
 	
 	void update() {
-		//isGameOver();
 		moveDown();
 		killLine();
 	}

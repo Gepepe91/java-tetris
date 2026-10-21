@@ -29,7 +29,7 @@ public class TetrisGamePanel extends JPanel {
 			return Color.BLUE;
 		else if (color == 7)
 			return Color.ORANGE;
-		return Color.WHITE;   // couleur par défaut
+		return Color.WHITE;
 	}
 
 	int borderSize = 30;
@@ -45,7 +45,7 @@ public class TetrisGamePanel extends JPanel {
 	TetrisGamePanel() {
 		setFocusable(true);
 
-		// Écoute des touches : on modifie le modèle, puis on redessine
+		// listening the keyboard
 		addKeyListener(new KeyAdapter() {
 			public void keyPressed(KeyEvent e) {
 				if (tetrisGame.isGameOver) {
@@ -68,14 +68,13 @@ public class TetrisGamePanel extends JPanel {
 
 		final Timer timer = new Timer();
 
-		// dans le constructeur, à la place de l'ancien new Timer().scheduleAtFixedRate(...)
 		timer.scheduleAtFixedRate(new TimerTask() {
 			@Override
 			public void run() {
 				tetrisGame.update();
 				if (tetrisGame.isGameOver) {
 					System.out.println("Game Over!");
-					timer.cancel();   // la boucle de jeu s'arrête, plus aucun message
+					timer.cancel();
 				}
 				repaint();
 			}
@@ -133,13 +132,6 @@ public class TetrisGamePanel extends JPanel {
 		}
 		*/
 	}
-	
-	
-	
-	
-	
-	
-	
 	
 
 	// Dessine une case de la grille avec la couleur demandée
