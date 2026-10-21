@@ -23,7 +23,12 @@ public class TetrisGame {
 		this.storedTetramino = new Tetramino();
 		this.ghostTetramino = new Tetramino();
 	}
-
+	
+	void update() {
+		//isGameOver();
+		moveDown();
+		killLine();
+	}
 	
 	boolean canMoveLeft() {
 		if (this.grid.isLeftCellOcupied(this.fallingTetramino.block1)

@@ -23,10 +23,18 @@ public class TetrisGamePanel extends JPanel {
 			return Color.GREEN;
 		else if (colorCode == 4)
 			return Color.ORANGE;
-		return Color.MAGENTA;   // couleur par défaut
+		return Color.WHITE;   // couleur par défaut
 	}
 
 	int borderSize = 30;
+	
+	
+	
+	
+	
+	
+	
+	
 
 	TetrisGamePanel() {
 		setFocusable(true);
@@ -43,21 +51,27 @@ public class TetrisGamePanel extends JPanel {
 				} else if (e.getKeyCode() == KeyEvent.VK_UP) {
 					tetrisGame.rotate();
 ;				}
+				
 				repaint();
 			}
 		});
-		
 
 		// Boucle de jeu : la pièce descend toutes les 500 ms
 		new Timer().scheduleAtFixedRate(new TimerTask() {
 			@Override
 			public void run() {
-				tetrisGame.moveDown();
+				tetrisGame.update();
 				repaint();
-				tetrisGame.killLine();
 			}
 		}, 1000, 500);
 	}
+	
+	
+	
+	
+	
+	
+	
 
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
@@ -95,6 +109,14 @@ public class TetrisGamePanel extends JPanel {
 		g.setFont(new Font("Arial", Font.BOLD, 15));
 		g.drawString("Score : " + tetrisGame.score, borderSize, borderSize - 10);
 	}
+	
+	
+	
+	
+	
+	
+	
+	
 
 	// Dessine une case de la grille avec la couleur demandée
 	void drawCell(Graphics g, int line, int column, int cellSize, Color color) {
