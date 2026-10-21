@@ -146,16 +146,21 @@ public class TetrisGamePanel extends JPanel {
 		g.setColor(Color.BLACK);
 		g.setFont(new Font("Arial", Font.BOLD, 15));
 
-		g.drawString("Suivante", sideX, nextBoxY - 6);
+		g.drawString("Next", sideX, nextBoxY - 6);
 		drawTetraminoInBox(g, tetrisGame.nextTetramino, sideX, nextBoxY, cellSize);
 
-		g.drawString("Stockée", sideX, storedBoxY - 6);
+		g.drawString("Stored", sideX, storedBoxY - 6);
 		drawTetraminoInBox(g, tetrisGame.storedTetramino, sideX, storedBoxY, cellSize);
 
 		// 3. Le score
 		g.setColor(Color.BLACK);
 		g.setFont(new Font("Arial", Font.BOLD, 15));
 		g.drawString("Score : " + tetrisGame.score, borderSize, borderSize - 10);
+		
+		// 4. Status
+		g.setColor(Color.BLACK);
+		g.setFont(new Font("Arial", Font.BOLD, (int) Math.sqrt( getWidth() * getHeight() )/20 ) );
+		g.drawString(tetrisGame.status, 3*getWidth()/4, 3*getHeight()/4);
 		
 		/*
 		if (tetrisGame.isGameOver) {

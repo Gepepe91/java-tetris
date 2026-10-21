@@ -14,6 +14,8 @@ public class TetrisGame {
 	
 	boolean isGameOver = false;
 	
+	String status = "Tetris!";
+	
 	TetrisGame(){
 	
 		gameGrid = new Grid(20,10);
@@ -128,6 +130,7 @@ public class TetrisGame {
 	void isGameOver() {
 		if (!this.fallingTetramino.isAllowedToExist) {
 			isGameOver = true;
+			status = "Game Over!";
 		}
 	}
 	
