@@ -3,7 +3,7 @@ package tetris;
 public class TetrisGame {
 	
 	// One grid for the game, one for viewing nextTetramino, one for storing a Tetramino
-	Grid gameGrid, previewGrid, storageGrid;
+	Grid gameGrid;
 	
 	Tetramino fallingTetramino; // player
 	Tetramino nextTetramino;    // upcoming Tetramino
@@ -23,11 +23,18 @@ public class TetrisGame {
 		nextTetramino = new Tetramino();
 		storedTetramino = new Tetramino();
 		ghostTetramino = new Tetramino();
+		updateGhost();
 	}
 	
 	void update() {
 		moveDown();
 		killLine();
+	}
+	
+	void updateGhost() {
+		ghostTetramino.copy(fallingTetramino);
+		while (ghostTetramino.canMoveDown(gameGrid))
+			ghostTetramino.moveDown();
 	}
 	
 	void landTetramino() {
@@ -44,6 +51,7 @@ public class TetrisGame {
 		// We abandon the current fallingTetramino to the garbage collector
 		this.fallingTetramino = this.nextTetramino;
 		this.fallingTetramino.spawn(this.gameGrid);
+		updateGhost();
 		this.isGameOver();
 		this.nextTetramino = new Tetramino();
 	}
@@ -60,12 +68,14 @@ public class TetrisGame {
 		System.out.println("moveLeft");
 		if (this.fallingTetramino.canMoveLeft(this.gameGrid))
 			this.fallingTetramino.moveLeft();
+		updateGhost();
 	}
 
 	void moveRight() {
 		System.out.println("moveRight");
 		if (this.fallingTetramino.canMoveRight(this.gameGrid))
 			this.fallingTetramino.moveRight();
+		updateGhost();
 	}
 	
 	void moveDown() {
@@ -74,6 +84,7 @@ public class TetrisGame {
 			this.fallingTetramino.moveDown();
 		else
 			this.landTetramino();
+		//updateGhost();
 	}
 	
 	void rotate() {
@@ -83,6 +94,7 @@ public class TetrisGame {
 		}
 		else
 			System.out.println("Can not rotate!");
+		updateGhost();
 	}
 	
 	void exchange() {
@@ -96,6 +108,9 @@ public class TetrisGame {
 	
 	void hardDrop() {
 		System.out.println("Hard drop");
+		fallingTetramino.copy(ghostTetramino);
+		landTetramino();
+		
 	}
 	
 	void killLine() {

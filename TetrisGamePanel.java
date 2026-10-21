@@ -112,6 +112,20 @@ public class TetrisGamePanel extends JPanel {
 				drawCell(g, line, column, cellSize, color);
 			}
 		}
+		
+		// 2a. Le fantôme, sous la pièce qui tombe
+		Color ghostColor = getColor(tetrisGame.ghostTetramino.colorAndShape);
+		g.setColor(ghostColor);
+		Block[] ghostBlocks = {
+			tetrisGame.ghostTetramino.block1, tetrisGame.ghostTetramino.block2,
+			tetrisGame.ghostTetramino.block3, tetrisGame.ghostTetramino.block4
+		};
+		for (Block b : ghostBlocks) {
+			int x = b.position.column * cellSize + borderSize;
+			int y = b.position.line * cellSize + borderSize;
+			g.drawRect(x, y, cellSize - 2, cellSize - 2);
+		}
+		
 		// 2. La pièce qui tombe, dessinée par-dessus
 		Position cell1 = tetrisGame.fallingTetramino.block1.position;
 		Position cell2 = tetrisGame.fallingTetramino.block2.position;
