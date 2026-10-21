@@ -57,28 +57,45 @@ public class Tetramino {
 		this.color = other.color;
 	}
 	
-	void spawn(int nbColumns) {
-		Block[] blocks = { block1, block2, block3, block4 };
+	void spawn(Grid grid) {
+	    Block[] blocks = { block1, block2, block3, block4 };
 
-		int minLine = blocks[0].position.line;
-		int minColumn = blocks[0].position.column;
-		int maxColumn = blocks[0].position.column;
-		for (Block b : blocks) {
-			minLine = Math.min(minLine, b.position.line);
-			minColumn = Math.min(minColumn, b.position.column);
-			maxColumn = Math.max(maxColumn, b.position.column);
-		}
+	    int minLine = blocks[0].position.line;
+	    int minColumn = blocks[0].position.column;
+	    int maxColumn = blocks[0].position.column;
+	    for (Block b : blocks) {
+	        minLine = Math.min(minLine, b.position.line);
+	        minColumn = Math.min(minColumn, b.position.column);
+	        maxColumn = Math.max(maxColumn, b.position.column);
+	    }
 
-		int width = maxColumn - minColumn + 1;
-		int deltaLine = -minLine;                              // le haut de la pièce sur la ligne 0
-		int deltaColumn = (nbColumns - width) / 2 - minColumn; // pièce centrée
+	    int width = maxColumn - minColumn + 1;
+	    int deltaLine = -minLine;
+	    int deltaColumn = (grid.nbColumns - width) / 2 - minColumn;
 
-		for (Block b : blocks)
-			b.position.setPosition(b.position.line + deltaLine, b.position.column + deltaColumn);
+	    for (Block b : blocks)
+	        b.position.setPosition(b.position.line + deltaLine, b.position.column + deltaColumn);
+
+	    // Maintenant que la pièce est à sa vraie place, on vérifie qu'elle est libre
+	    this.shouldSpawn(grid);
 	}
 	
-	void shouldExist() {
-		
+	boolean shouldSpawn(Grid grid) {
+		/*
+		 * Check if the space of fallingTetramino is occupied.
+		 * If true, update this.allowToExist as false.
+		 * the Tetramino spawn, then check allowToExist
+		 * If true, continue the game
+		 * else, GameOver
+		 */
+		if ( grid.isCellStuck(this.block1)
+			|| grid.isCellStuck(this.block2)
+			|| grid.isCellStuck(this.block3)
+			|| grid.isCellStuck(this.block4)
+				) {
+			this.isAllowedToExist = false;
+		}
+		return this.isAllowedToExist;
 	}
 	
 	void setAsCube() {

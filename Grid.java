@@ -25,7 +25,9 @@ public class Grid {
 	}
 	
 	boolean isStuck(int line, int column) {
-		return (this.cells[line][column] != null);
+	    if (!this.isInside(line, column))
+	        return false;
+	    return this.cells[line][column] != null;
 	}
 
 	// Une case hors de la grille compte comme occupée : c'est ça qui remplace les murs

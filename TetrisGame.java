@@ -18,7 +18,7 @@ public class TetrisGame {
 		this.grid = new Grid();
 		
 		this.fallingTetramino = new Tetramino();
-		this.fallingTetramino.spawn(this.grid.nbColumns);
+		this.fallingTetramino.spawn(this.grid);
 		this.nextTetramino = new Tetramino();
 		this.storedTetramino = new Tetramino();
 		this.ghostTetramino = new Tetramino();
@@ -41,26 +41,20 @@ public class TetrisGame {
 		this.grid.cells[b3.position.line][b3.position.column] = b3;
 		this.grid.cells[b4.position.line][b4.position.column] = b4;
 
+		// We abandon the current fallingTetramino to the garbage collector
 		this.fallingTetramino = this.nextTetramino;
-		this.fallingTetramino.spawn(this.grid.nbColumns);   
+		this.fallingTetramino.spawn(this.grid);
+		this.isGameOver();
 		this.nextTetramino = new Tetramino();
 	}
 	
-	void shouldSpawn(Tetramino tetramino) {
-		/*
-		 * Check if the space of fallingTetramino is occupied.
-		 * If true, update fallingTetramino.allowToExist as false.
-		 * the fallingTetramino spawn, then check allowToExist
-		 * If true, continue the game
-		 * else, GameOver
-		 */
-		if ( this.grid.isCellStuck(tetramino.block1)
-			|| this.grid.isCellStuck(tetramino.block2)
-			|| this.grid.isCellStuck(tetramino.block3)
-			|| this.grid.isCellStuck(tetramino.block4)
-				)
-			tetramino.isAllowedToExist = false;
+	/*
+	Tetramino getNexTetramino(Tetramino previousOne , Tetramino nextOne) {
+		previousOne = nextOne;
+		previousOne.spawn(this.grid.nbColumns);
+		return previousOne;
 	}
+	*/
 	
 	void moveLeft() {
 		System.out.println("moveLeft");
