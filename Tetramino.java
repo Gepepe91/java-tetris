@@ -195,6 +195,44 @@ public class Tetramino {
 		this.orientation = "default";
 	}
 	
+	void setAsRightRotatedInvertedL() {
+		this.shape = "il";
+		this.orientation = "rightRotated";
+	}
+	
+	void setAsReversedInvertedL() {
+		this.shape = "il";
+		this.orientation = "reversed";
+	}
+	
+	void setAsLeftRotatedInvertedL() {
+		this.shape = "il";
+		this.orientation = "leftRotated";
+	}
+	
+	void setAsT() {
+		block2.placeRightOf(block1);
+		block3.placeUnderOf(block2);
+		block4.placeRightOf(block2);
+		this.shape = "t";
+		this.orientation = "default";
+	}
+	
+	void setAsRightRotatedT() {
+		this.shape = "t";
+		this.orientation = "rightRotated";
+	}
+	
+	void setAsReversedT() {
+		this.shape = "t";
+		this.orientation = "reversed";
+	}
+	
+	void setAsLeftRotatedT() {
+		this.shape = "t";
+		this.orientation = "leftRotated";
+	}
+	
 	boolean canMoveLeft(Grid grid) {
 		if (grid.isLeftCellOcupied(this.block1)
 			|| grid.isLeftCellOcupied(this.block2)
@@ -257,43 +295,85 @@ public class Tetramino {
 	}
 	
 	
+	
 	void rotateTetramino() {
 		if (this.shape == "line") {
-			if (this.orientation == "vertical")
-				this.setAsHorizontalLine();
-			else
-				this.setAsVerticalLine();
+			rotateLine();
 		}
 		
 		if (this.shape == "z") {
-			if (this.orientation == "default")
-				this.setAsRotatedZ();
-			else
-				this.setAsZ();
+			rotateZ();
 		}
 		
 		if (this.shape == "iz") {
-			if (this.orientation == "default")
-				this.setAsRotatedIvertedZ();
-			else
-				this.setAsInvertedZ();
+			rotateInvertedZ();
 		}
 		
 		if (this.shape == "l") {
-			if (this.orientation == "default")
-				this.setAsRightRotatedL();
-			else if (this.orientation == "rightRotated")
-				this.setAsReversedL();
-			else if (this.orientation == "reversed")
-				this.setAsLeftRotatedL();
-			else //if (this.orientation == "leftRotated")
-				this.setAsL();
+			rotateL();
 		}
 		
-		// Same with invertedL
+		if (this.shape == "il") {
+			rotateInvertedL();
+		}
 		
+		if (this.shape == "t")
+			rotateT();
 		
-		
+	}
+	
+	void rotateLine() {
+		if (this.orientation == "vertical")
+			this.setAsHorizontalLine();
+		else
+			this.setAsVerticalLine();
+	}
+	
+	void rotateZ() {
+		if (this.orientation == "default")
+			this.setAsRotatedZ();
+		else
+			this.setAsZ();
+	}
+	
+	void rotateInvertedZ() {
+		if (this.orientation == "default")
+			this.setAsRotatedIvertedZ();
+		else
+			this.setAsInvertedZ();
+	}
+	
+	void rotateL() {
+		if (this.orientation == "default")
+			this.setAsRightRotatedL();
+		else if (this.orientation == "rightRotated")
+			this.setAsReversedL();
+		else if (this.orientation == "reversed")
+			this.setAsLeftRotatedL();
+		else //if (this.orientation == "leftRotated")
+			this.setAsL();
+	}
+	
+	void rotateInvertedL() {
+		if (this.orientation == "default")
+			this.setAsRightRotatedInvertedL();
+		else if (this.orientation == "rightRotated")
+			this.setAsReversedInvertedL();
+		else if (this.orientation == "reversed")
+			this.setAsLeftRotatedInvertedL();
+		else
+			this.setAsInvertedL();
+	}
+	
+	void rotateT() {
+		if (this.orientation == "default")
+			this.setAsRightRotatedT();
+		else if (this.orientation == "rightRotated")
+			this.setAsReversedT();
+		else if (this.orientation == "reversed")
+			this.setAsLeftRotatedT();
+		else
+			this.setAsT();
 	}
 
 
