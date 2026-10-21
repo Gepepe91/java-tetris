@@ -7,9 +7,9 @@ public class Grid {
 	Block[][] cells;   // cells[ligne][colonne] : un Block, ou null si la case est vide
 	
 	Grid(){
-		this.nbLines = 15;
-		this.nbColumns = 10;
-		this.cells = new Block[15][10];
+		this.nbLines = 1;
+		this.nbColumns = 1;
+		this.cells = new Block[1][1];
 	}
 
 	Grid(int nbLines, int nbColumns) {

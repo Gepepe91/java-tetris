@@ -299,7 +299,7 @@ public class Tetramino {
 	boolean canTetraminoRotate(Grid grid) {
 		Tetramino rotateTest = new Tetramino();
 		rotateTest.copy(this);
-		rotateTest.rotateTetramino();   // ne touche que la copie
+		rotateTest.rotateTetramino();
 
 		Block[] blocks = { rotateTest.block1, rotateTest.block2, rotateTest.block3, rotateTest.block4 };
 		for (Block b : blocks) {
