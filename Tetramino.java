@@ -178,6 +178,14 @@ public class Tetramino {
 		this.orientation = "default";
 	}
 	
+	boolean canMoveLeft(Grid grid) {
+		if (grid.isLeftCellOcupied(this.block1)
+			|| grid.isLeftCellOcupied(this.block2)
+			|| grid.isLeftCellOcupied(this.block3)
+			|| grid.isLeftCellOcupied(this.block4))
+			return false;
+		return true;
+	}
 	
 	void moveLeft() {
 		this.block1.moveLeft();
@@ -186,11 +194,29 @@ public class Tetramino {
 		this.block4.moveLeft();
 	}
 	
+	boolean canMoveRight(Grid grid) {
+		if (grid.isRightCellOcupied(this.block1)
+			|| grid.isRightCellOcupied(this.block2)
+			|| grid.isRightCellOcupied(this.block3)
+			|| grid.isRightCellOcupied(this.block4))
+			return false;
+		return true;
+	}
+	
 	void moveRight() {
 		this.block1.moveRight();
 		this.block2.moveRight();
 		this.block3.moveRight();
 		this.block4.moveRight();
+	}
+	
+	boolean canMoveDown(Grid grid) {
+		if (grid.isBelowCellOcupied(this.block1)
+			|| grid.isBelowCellOcupied(this.block2)
+			|| grid.isBelowCellOcupied(this.block3)
+			|| grid.isBelowCellOcupied(this.block4))
+			return false;
+		return true;
 	}
 	
 	void moveDown() {

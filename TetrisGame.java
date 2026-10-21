@@ -30,33 +30,6 @@ public class TetrisGame {
 		killLine();
 	}
 	
-	boolean canMoveLeft() {
-		if (this.grid.isLeftCellOcupied(this.fallingTetramino.block1)
-			|| this.grid.isLeftCellOcupied(this.fallingTetramino.block2)
-			|| this.grid.isLeftCellOcupied(this.fallingTetramino.block3)
-			|| this.grid.isLeftCellOcupied(this.fallingTetramino.block4))
-			return false;
-		return true;
-	}
-	
-	boolean canMoveRight() {
-		if (this.grid.isRightCellOcupied(this.fallingTetramino.block1)
-			|| this.grid.isRightCellOcupied(this.fallingTetramino.block2)
-			|| this.grid.isRightCellOcupied(this.fallingTetramino.block3)
-			|| this.grid.isRightCellOcupied(this.fallingTetramino.block4))
-			return false;
-		return true;
-	}
-	
-	boolean canMoveDown() {
-		if (this.grid.isBelowCellOcupied(this.fallingTetramino.block1)
-			|| this.grid.isBelowCellOcupied(this.fallingTetramino.block2)
-			|| this.grid.isBelowCellOcupied(this.fallingTetramino.block3)
-			|| this.grid.isBelowCellOcupied(this.fallingTetramino.block4))
-			return false;
-		return true;
-	}
-	
 	void landTetramino() {
 		Block b1 = this.fallingTetramino.block1;
 		Block b2 = this.fallingTetramino.block2;
@@ -91,19 +64,19 @@ public class TetrisGame {
 	
 	void moveLeft() {
 		System.out.println("moveLeft");
-		if (this.canMoveLeft())
+		if (this.fallingTetramino.canMoveLeft(this.grid))
 			this.fallingTetramino.moveLeft();
 	}
 
 	void moveRight() {
 		System.out.println("moveRight");
-		if (this.canMoveRight())
+		if (this.fallingTetramino.canMoveRight(this.grid))
 			this.fallingTetramino.moveRight();
 	}
 	
 	void moveDown() {
 		//System.out.println("moveDown");
-		if (this.canMoveDown())
+		if (this.fallingTetramino.canMoveDown(this.grid))
 			this.fallingTetramino.moveDown();
 		else
 			this.landTetramino();
