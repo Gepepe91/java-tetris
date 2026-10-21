@@ -60,15 +60,17 @@ public class TetrisGamePanel extends JPanel {
 			}
 		});
 
-		// Boucle de jeu : la pièce descend toutes les 500 ms
-		new Timer().scheduleAtFixedRate(new TimerTask() {
+		final Timer timer = new Timer();
+
+		// dans le constructeur, à la place de l'ancien new Timer().scheduleAtFixedRate(...)
+		timer.scheduleAtFixedRate(new TimerTask() {
 			@Override
 			public void run() {
+				tetrisGame.update();
 				if (tetrisGame.isGameOver) {
 					System.out.println("Game Over!");
-					return;
+					timer.cancel();   // la boucle de jeu s'arrête, plus aucun message
 				}
-				tetrisGame.update();
 				repaint();
 			}
 		}, 1000, 500);
@@ -93,7 +95,7 @@ public class TetrisGamePanel extends JPanel {
 		for (int line = 0; line < tetrisGame.grid.nbLines; line++) {
 			for (int column = 0; column < tetrisGame.grid.nbColumns; column++) {
 				Block block = tetrisGame.grid.cells[line][column];
-				Color color = Color.DARK_GRAY;   // couleur d'une case vide
+				Color color = Color.LIGHT_GRAY;   // couleur d'une case vide
 				if (block != null) {
 					color = getColor(block.colorCode); // Adapter avec le vrai objet Color
 				}
@@ -116,6 +118,14 @@ public class TetrisGamePanel extends JPanel {
 		g.setColor(Color.BLACK);
 		g.setFont(new Font("Arial", Font.BOLD, 15));
 		g.drawString("Score : " + tetrisGame.score, borderSize, borderSize - 10);
+		
+		/*
+		if (tetrisGame.isGameOver) {
+			g.setColor(Color.RED);
+			g.setFont(new Font("Arial", Font.BOLD, 28));
+			g.drawString("GAME OVER", borderSize, getHeight() / 2);
+		}
+		*/
 	}
 	
 	

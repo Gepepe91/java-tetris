@@ -18,11 +18,21 @@ public class GameConsole extends JScrollPane {
 	GameConsole() {
 		textArea.setEditable(false);
 		textArea.setLineWrap(true);
-		textArea.setBackground(Color.BLACK);
-		textArea.setForeground(Color.GREEN);
+		textArea.setWrapStyleWord(true);
+
+		// Thème clair, proche de VS Code / Eclipse
+		textArea.setBackground(new Color(0xFFFFFF));          // fond blanc
+		textArea.setForeground(new Color(0x3B3B3B));          // texte gris foncé, plus doux que le noir pur
+		textArea.setSelectionColor(new Color(0xADD6FF));      // sélection bleu clair
+		textArea.setSelectedTextColor(new Color(0x000000));
 		textArea.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 12));
 
-		// Important : la console ne doit jamais voler le focus clavier au jeu
+		// Marge intérieure pour aérer le texte
+		//textArea.setBorder(BorderFactory.createEmptyBorder(6, 8, 6, 8));
+
+		// Fine bordure grise autour de la console, à la place du cadre par défaut
+		//this.setBorder(BorderFactory.createMatteBorder(0, 1, 0, 0, new Color(0xCCCCCC)));
+
 		textArea.setFocusable(false);
 		this.setFocusable(false);
 
