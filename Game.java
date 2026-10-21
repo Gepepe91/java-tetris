@@ -25,6 +25,8 @@ public class Game {
 		frame.setVisible(true);
 
 		//console.redirectSystemOut();
+		MusicPlayer music = new MusicPlayer();
+		music.playLoop("/tetris/media/music.wav");
 		System.out.println("This is Tetris!");
 
 		gamePanel.requestFocusInWindow();

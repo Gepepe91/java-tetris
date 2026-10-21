@@ -160,7 +160,7 @@ public class TetrisGamePanel extends JPanel {
 		// 4. Status
 		g.setColor(Color.BLACK);
 		g.setFont(new Font("Arial", Font.BOLD, (int) Math.sqrt( getWidth() * getHeight() )/20 ) );
-		g.drawString(tetrisGame.status, 3*getWidth()/4, 3*getHeight()/4);
+		g.drawString(tetrisGame.status, 2*getWidth()/4, 3*getHeight()/4);
 		
 		/*
 		if (tetrisGame.isGameOver) {
