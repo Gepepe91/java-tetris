@@ -42,6 +42,10 @@ public class TetrisGamePanel extends JPanel {
 		// Écoute des touches : on modifie le modèle, puis on redessine
 		addKeyListener(new KeyAdapter() {
 			public void keyPressed(KeyEvent e) {
+				if (tetrisGame.isGameOver) {
+					return;
+				}
+				
 				if (e.getKeyCode() == KeyEvent.VK_LEFT) {
 					tetrisGame.moveLeft();
 				} else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
@@ -60,6 +64,9 @@ public class TetrisGamePanel extends JPanel {
 		new Timer().scheduleAtFixedRate(new TimerTask() {
 			@Override
 			public void run() {
+				if (tetrisGame.isGameOver) {
+					return;
+				}
 				tetrisGame.update();
 				repaint();
 			}

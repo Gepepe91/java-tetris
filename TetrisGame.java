@@ -102,6 +102,13 @@ public class TetrisGame {
 			tetramino.isAllowedToExist = false;
 	}
 	
+	void isGameOver() {
+		if (!this.fallingTetramino.isAllowedToExist) {
+			isGameOver = true;
+			System.out.println("Game Over!");
+		}
+	}
+	
 	void moveLeft() {
 		System.out.println("moveLeft");
 		if (this.canMoveLeft())
