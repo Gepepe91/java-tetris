@@ -65,6 +65,7 @@ public class TetrisGamePanel extends JPanel {
 			@Override
 			public void run() {
 				if (tetrisGame.isGameOver) {
+					System.out.println("Game Over!");
 					return;
 				}
 				tetrisGame.update();

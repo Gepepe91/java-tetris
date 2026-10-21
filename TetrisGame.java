@@ -73,19 +73,6 @@ public class TetrisGame {
 		this.nextTetramino = new Tetramino();
 	}
 	
-	boolean canRotate() {
-		Tetramino rotateTest = new Tetramino();
-		rotateTest.copy(this.fallingTetramino);
-		rotateTest.rotate();   // ne touche que la copie
-
-		Block[] blocks = { rotateTest.block1, rotateTest.block2, rotateTest.block3, rotateTest.block4 };
-		for (Block b : blocks) {
-			if (this.grid.isOcupied(b.position.line, b.position.column))
-				return false;
-		}
-		return true;
-	}
-	
 	void shouldSpawn(Tetramino tetramino) {
 		/*
 		 * Check if the space of fallingTetramino is occupied.
@@ -100,13 +87,6 @@ public class TetrisGame {
 			|| this.grid.isCellStuck(tetramino.block4)
 				)
 			tetramino.isAllowedToExist = false;
-	}
-	
-	void isGameOver() {
-		if (!this.fallingTetramino.isAllowedToExist) {
-			isGameOver = true;
-			System.out.println("Game Over!");
-		}
 	}
 	
 	void moveLeft() {
@@ -130,9 +110,9 @@ public class TetrisGame {
 	}
 	
 	void rotate() {
-		if (this.canRotate()) {
+		if (fallingTetramino.canTetraminoRotate(this.grid)) {
 			System.out.println("rotate");
-			this.fallingTetramino.rotate();
+			this.fallingTetramino.rotateTetramino();
 		}
 		else
 			System.out.println("Can not rotate!");
@@ -147,6 +127,12 @@ public class TetrisGame {
 				// elle peut être pleine à son tour, il faut la retester
 				indexLine--;
 			}
+		}
+	}
+	
+	void isGameOver() {
+		if (!this.fallingTetramino.isAllowedToExist) {
+			isGameOver = true;
 		}
 	}
 	

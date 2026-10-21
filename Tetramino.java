@@ -77,6 +77,10 @@ public class Tetramino {
 			b.position.setPosition(b.position.line + deltaLine, b.position.column + deltaColumn);
 	}
 	
+	void shouldExist() {
+		
+	}
+	
 	void setAsCube() {
 		this.block2.placeRightOf(this.block1);
 		this.block3.placeUnderOf(this.block1);
@@ -196,7 +200,21 @@ public class Tetramino {
 		this.block4.moveDown();
 	}
 	
-	void rotate() {
+	boolean canTetraminoRotate(Grid grid) {
+		Tetramino rotateTest = new Tetramino();
+		rotateTest.copy(this);
+		rotateTest.rotateTetramino();   // ne touche que la copie
+
+		Block[] blocks = { rotateTest.block1, rotateTest.block2, rotateTest.block3, rotateTest.block4 };
+		for (Block b : blocks) {
+			if (grid.isOcupied(b.position.line, b.position.column))
+				return false;
+		}
+		return true;
+	}
+	
+	
+	void rotateTetramino() {
 		if (this.shape == "line") {
 			if (this.orientation == "vertical")
 				this.setAsHorizontalLine();
