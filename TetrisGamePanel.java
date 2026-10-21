@@ -60,7 +60,11 @@ public class TetrisGamePanel extends JPanel {
 					tetrisGame.moveDown();
 				} else if (e.getKeyCode() == KeyEvent.VK_UP) {
 					tetrisGame.rotate();
-;				}
+				} else if (e.getKeyCode() == KeyEvent.VK_E){
+					tetrisGame.exchange();
+				} else if (e.getKeyCode() == KeyEvent.VK_SPACE){
+					tetrisGame.hardDrop();
+				} 
 				
 				repaint();
 			}
@@ -92,14 +96,15 @@ public class TetrisGamePanel extends JPanel {
 		super.paintComponent(g);
 
 		// Taille d'une case carrée : la plus petite des deux possibilités
-		int cellWidth = (getWidth() - 2 * borderSize) / tetrisGame.grid.nbColumns;
-		int cellHeight = (getHeight() - 2 * borderSize) / tetrisGame.grid.nbLines;
+		//int cellWidth = (getWidth() - 2 * borderSize) / tetrisGame.gameGrid.nbColumns;
+		int cellWidth = (getWidth() - 2 * borderSize) / (tetrisGame.gameGrid.nbColumns + 5);
+		int cellHeight = (getHeight() - 2 * borderSize) / tetrisGame.gameGrid.nbLines;
 		int cellSize = Math.min(cellWidth, cellHeight);
 
 		// 1. La grille : cases vides et blocs déjà posés
-		for (int line = 0; line < tetrisGame.grid.nbLines; line++) {
-			for (int column = 0; column < tetrisGame.grid.nbColumns; column++) {
-				Block block = tetrisGame.grid.cells[line][column];
+		for (int line = 0; line < tetrisGame.gameGrid.nbLines; line++) {
+			for (int column = 0; column < tetrisGame.gameGrid.nbColumns; column++) {
+				Block block = tetrisGame.gameGrid.cells[line][column];
 				Color color = Color.LIGHT_GRAY;   // couleur d'une case vide
 				if (block != null) {
 					color = getColor(block.color); // Adapter avec le vrai objet Color
@@ -118,6 +123,20 @@ public class TetrisGamePanel extends JPanel {
 		drawCell(g,cell2.line, cell2.column, cellSize, color);
 		drawCell(g,cell3.line, cell3.column, cellSize, color);
 		drawCell(g,cell4.line, cell4.column, cellSize, color);
+		
+		// Colonne de droite : à droite de la grille de jeu
+		int sideX = borderSize + tetrisGame.gameGrid.nbColumns * cellSize + borderSize;
+		int nextBoxY = borderSize + 20;
+		int storedBoxY = nextBoxY + 4 * cellSize + 50;
+
+		g.setColor(Color.BLACK);
+		g.setFont(new Font("Arial", Font.BOLD, 15));
+
+		g.drawString("Suivante", sideX, nextBoxY - 6);
+		drawTetraminoInBox(g, tetrisGame.nextTetramino, sideX, nextBoxY, cellSize);
+
+		g.drawString("Stockée", sideX, storedBoxY - 6);
+		drawTetraminoInBox(g, tetrisGame.storedTetramino, sideX, storedBoxY, cellSize);
 
 		// 3. Le score
 		g.setColor(Color.BLACK);
@@ -142,4 +161,47 @@ public class TetrisGamePanel extends JPanel {
 		g.setColor(color);
 		g.fillRect(cellX, cellY, cellSize - 1, cellSize - 1);
 	}
+	
+	
+	
+	
+	// Dessine un tetramino dans une boîte de 4x4 cases dont le coin haut-gauche est (boxX, boxY)
+	void drawTetraminoInBox(Graphics g, Tetramino t, int boxX, int boxY, int cellSize) {
+		// Fond de la boîte
+		g.setColor(Color.LIGHT_GRAY);
+		g.fillRect(boxX, boxY, 4 * cellSize, 4 * cellSize);
+
+		if (t == null)   // rien de stocké pour l'instant
+			return;
+
+		Block[] blocks = { t.block1, t.block2, t.block3, t.block4 };
+
+		int minLine = blocks[0].position.line;
+		int maxLine = minLine;
+		int minColumn = blocks[0].position.column;
+		int maxColumn = minColumn;
+		for (Block b : blocks) {
+			minLine = Math.min(minLine, b.position.line);
+			maxLine = Math.max(maxLine, b.position.line);
+			minColumn = Math.min(minColumn, b.position.column);
+			maxColumn = Math.max(maxColumn, b.position.column);
+		}
+
+		// Pour centrer la pièce dans la boîte
+		int widthInCells = maxColumn - minColumn + 1;
+		int heightInCells = maxLine - minLine + 1;
+		int offsetX = (4 - widthInCells) * cellSize / 2;
+		int offsetY = (4 - heightInCells) * cellSize / 2;
+
+		g.setColor(getColor(t.colorAndShape));
+		for (Block b : blocks) {
+			int x = boxX + offsetX + (b.position.column - minColumn) * cellSize;
+			int y = boxY + offsetY + (b.position.line - minLine) * cellSize;
+			g.fillRect(x, y, cellSize - 1, cellSize - 1);
+		}
+	}
+	
+	
+	
+	
 }
