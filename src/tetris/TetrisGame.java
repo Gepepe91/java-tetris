@@ -29,6 +29,7 @@ public class TetrisGame {
 	}
 	
 	void update() {
+		updateGhost();
 		moveDown();
 		killLine();
 	}
@@ -86,7 +87,7 @@ public class TetrisGame {
 			this.fallingTetramino.moveDown();
 		else
 			this.landTetramino();
-		//updateGhost();
+		updateGhost();
 	}
 	
 	void rotate() {
@@ -106,12 +107,14 @@ public class TetrisGame {
 		fallingTetramino.copy(storedTetramino);
 		storedTetramino.copy(temp);
 		fallingTetramino.spawn(gameGrid);
+		updateGhost();
 	}
 	
 	void hardDrop() {
 		System.out.println("Hard drop");
 		fallingTetramino.copy(ghostTetramino);
 		landTetramino();
+		updateGhost();
 		
 	}
 	
@@ -125,6 +128,7 @@ public class TetrisGame {
 				indexLine--;
 			}
 		}
+		updateGhost();
 	}
 	
 	void isGameOver() {
